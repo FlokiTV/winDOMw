@@ -1,3 +1,4 @@
+
 /* inject trick */
 
 const addScript = (src, callback) => {
@@ -5,77 +6,154 @@ const addScript = (src, callback) => {
     s.setAttribute("src", src);
     s.onload = callback;
     document.body.appendChild(s);
-};
-
-addScript("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+  };
+  addScript(
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js",
     () => {
-        addScript("https://cdnjs.cloudflare.com/ajax/libs/json2html/2.1.0/json2html.min.js");
+      addScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/json2html/2.1.0/json2html.min.js"
+      );
     }
-);
-
-/* inject trick */
-let styl = document.createElement("style");
-document.head.appendChild(styl);
-styl.innerHTML =
-  '@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";';
-styl.innerHTML += `html{ overflow:hidden }
-.alert-background{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-}
-.win-alert{
-    z-index: 1000!important;
-}
-.is-fixed{
-    position: fixed;
-    z-index: 99;
-    top:0;
-    left:0;
-}
-
-.window {
-    min-width: 140px;
-    /* min-height: 100px; */
-    padding: 0;
-    overflow: hidden;
-    border-radius: 0px;
-}
-.window header{
-    user-select: none;
-}
-.window header span{
-    width: calc(100% - 18px);
-    display: block;
-    padding: 5px;
-    font-size: 12px!important;
-    height:28px;
-}
-.window header button{
-    width: 18px;
-    height: 28px;
-    padding: 0;
-    line-height: normal;
-    font-size: 10px!important;
-}
-.window-content{
-    padding: 5px;
-    font-size: 12px!important;
-    max-height: 600px;
-    max-width: 400px;
-    overflow: auto
-}
-`;
-
-let app = document.createElement("div");
-app.id = "DOM";
-document.body.appendChild(app);
-
-/* helper */
-window._json2html = {
+  );
+  
+  /* inject trick */
+  
+  let styl = document.createElement("style");
+  document.head.appendChild(styl);
+  styl.innerHTML =
+    '@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";';
+  styl.innerHTML += `html{ overflow:hidden }
+  .alert-background{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+  }
+  .win-alert{
+      z-index: 1000!important;
+  }
+  .is-fixed{
+      position: fixed;
+      z-index: 99;
+      top:0;
+      left:0;
+  }
+  
+  .window {
+      min-width: 140px;
+      /* min-height: 100px; */
+      padding: 0;
+      overflow: hidden;
+      border-radius: 0px;
+  }
+  .window header{
+      user-select: none;
+  }
+  .window header span{
+      width: calc(100% - 18px);
+      display: block;
+      padding: 5px;
+      font-size: 12px!important;
+      height:28px;
+  }
+  .window header button{
+      width: 18px;
+      height: 28px;
+      padding: 0;
+      line-height: normal;
+      font-size: 10px!important;
+  }
+  .window-content{
+      padding: 5px;
+      font-size: 12px!important;
+      max-height: 600px;
+      max-width: 400px;
+      overflow: auto
+  }
+  `;
+  
+  let app = document.createElement("div");
+  app.id = "DOM";
+  document.body.appendChild(app);
+  /*
+  
+  */
+  
+  const API = {
+    title: "API",
+    id: "api",
+    size: {
+      width: "700px",
+      height: "600px"
+    },
+    onready: function (win) {
+      $(win.el).find(".window-content").attr(
+        "style",
+        `
+          max-width: none;
+          height: 95%;
+          overflow: hidden;
+          padding: 1px;
+        `
+      );
+    },
+    content: [
+      {
+        "<>": "iframe",
+        src: "https://aureom.github.io/live-lol-esports/#/",
+        style: "border:0px;width:100%;height:100%"
+      }
+    ]
+  };
+  
+  const BET = {
+    title: "BET",
+    id: "bet",
+    size: {
+      width: "700px",
+      height: "600px"
+    },
+    onready: function (win) {
+      $(win.el).find(".window-content").attr(
+        "style",
+        `
+          max-width: none;
+          height: 95%;
+          overflow: hidden;
+          padding: 1px;
+        `
+      );
+    },
+    content: [
+        {
+            "<>":"input",
+            id:"ytSearch"
+        },
+        {
+            "<>":"button",
+            html: "search",
+            onclick:()=>{
+                /*
+                var base_url = 'http://www.youtube.com/embed?listType=search&video=';
+                var search_field = document.getElementById('yourtextfield').value;
+                var target_url = base_url + search_field;
+                var ifr = document.getElementById('youriframe');
+                ifr.src = target_url;
+                */
+            }
+        },
+        {
+            "<>": "iframe",
+            id:"youriframe",
+            src:"https://www.youtube.com/embed?listType=search&q=pisa%20na%20cabe%C3%A7a%20da%20serpente",
+            style: "border:0px;width:100%;height:100%"
+        }
+    ]
+  };
+  
+  window._json2html = {
     events:
       "blur focus focusin focusout resize scroll click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup contextmenu",
     setupListeners(el) {
@@ -117,10 +195,9 @@ window._json2html = {
         ...opts
       });
     }
-};
-/* helper */
+  };
   
-window._windowManager = {
+  window._windowManager = {
     _window: [],
     _zIndex: 99,
     getWindow(id) {
@@ -143,8 +220,8 @@ window._windowManager = {
       if (index != null) this._window.splice(index, 1);
     },
     /*
-        Remove DOM element and reference from _window
-    */
+          Remove DOM element and reference from _window
+      */
     closeWindow(uuid) {
       let _window = this.getWindowByUUID(uuid);
       _window.el.remove();
@@ -161,18 +238,18 @@ window._windowManager = {
       };
       this._window.push(win);
       $("#DOM").json2html({}, this.winTemplate(win));
-    /*
-        Setup sizes
-    */
+      /*
+              Setup sizes
+          */
       if (opts.size) {
         if (opts.size.maxwidth) win.el.style["max-width"] = opts.size.maxwidth;
         if (opts.size.maxheight) win.el.style["max-height"] = opts.size.maxheight;
         win.el.style.width = opts.size.width;
         win.el.style.height = opts.size.height;
       }
-    /*
-        Setup position
-    */
+      /*
+              Setup position
+          */
       if (opts.pos) {
         win.el.style.left = opts.pos.left;
         win.el.style.top = opts.pos.top;
@@ -360,3 +437,4 @@ window._windowManager = {
     _windowManager.newWindow(YT);
     _windowManager.newWindow(HLTV);
   });
+  

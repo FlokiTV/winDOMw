@@ -1,4 +1,4 @@
-/* inject trick */
+/* inject trick 
 
 const addScript = (src, callback) => {
   var s = document.createElement("script");
@@ -17,6 +17,7 @@ addScript(
 );
 
 /* inject trick */
+
 let styl = document.createElement("style");
 document.head.appendChild(styl);
 styl.innerHTML =
